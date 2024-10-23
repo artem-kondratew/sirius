@@ -39,7 +39,6 @@ print(pairs)
 
 
 def get_probability(noise : bool, e : float):
-    print('NO NOISE' if not noise else 'NOISE')
     for pair in pairs:
         i, j = pair
         theta1 = thetas[i-1][0 if not noise else 1]
@@ -48,13 +47,14 @@ def get_probability(noise : bool, e : float):
         D2 = theta2 ** 2 / groups[j-1][0 if not noise else 1].shape[0]
 
         D_delta = D1 + D2
-        print('d_delta', D_delta)
-        P = 1.0 - min(D_delta / (e ** 2), 1.0)
+        # print('d_delta', D_delta)
+        P = min(1, D_delta / (e ** 2))
 
-        print(f'pair {pair}, theta_1 = {theta1}, theta_2 = {theta2}, D1 = {D1}, D2 = {D2}')
-        print(f'P = {P}\n')
+        print('without noise' if not noise else 'with noise')
+        print(f'pair {pair}, theta_1 = {round(theta1, 3)}, theta_2 = {round(theta2, 3)}, D1 = {round(D1, 3)}, D2 = {round(D2, 3)}')
+        print(f'P(|theta1 - theta2| >= e) <= {round(P, 5)}\n')
     
 
-e = 100
+e = 200
 get_probability(False, e)
 get_probability(True, e)
