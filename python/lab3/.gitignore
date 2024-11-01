@@ -1,0 +1,12 @@
+*.txt
+*.csv
+*.spec
+
+*tmp*
+*build*
+tests/etalon/*
+tests/files/*
+
+!tests/etalon/main.pyd
+!tests/etalon/main.pybs
+!requirements.txt

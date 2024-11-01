@@ -1,0 +1,5 @@
+parameterized
+numpy
+joblib
+scipy
+matplotlib

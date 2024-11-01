@@ -1,0 +1,25 @@
+[build-system]
+requires = [
+  "setuptools",
+  "setuptools-scm",
+  "wheel",
+  "tk",
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lab3"
+version = "0.0.1"
+authors = [
+    { name = "Artem Kondratev", email = "artemkondratev5@gmail.com" }
+]
+description = "legendre approx"
+readme = "README.md"
+requires-python = ">=3.10"
+keywords = ["pi"]
+license = { text = "GSL" }
+dependencies = [
+  "numpy",
+  "scipy",
+  "matplotlib",
+]

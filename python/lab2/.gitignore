@@ -1,0 +1,9 @@
+*.spec
+
+*build*
+*dist*
+tests/etalon/*
+tests/files/*
+lab2.egg-info
+
+!tests/etalon/main*

@@ -1,0 +1,33 @@
+image: python:latest
+
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+
+cache:
+  paths:
+    - .cache/pip
+
+test:
+  before_script:
+    - python --version ; pip --version  # For debugging
+    - pip install virtualenv
+    - virtualenv venv
+    - source venv/bin/activate
+    - pip install -r requirements.txt
+    - mkdir .cache/egg-info
+    - pip install .
+    - python -m tests.test
+    - cat tests/etalon/gen_data.pybs | base64 -d > tests/etalon/gen_data.py
+    - cat tests/etalon/main.pybs | base64 -d > tests/etalon/main.py
+    - cat tests/etalon/Transform2D.pybs | base64 -d > tests/etalon/Transform2D.py
+
+  script:
+    - python tests/test1.py
+  rules:
+    - when: always
+  
+  after_script:
+    - rm tests/etalon/gen_data.py
+    - rm tests/etalon/main.py
+    - rm tests/etalon/Transform2D.py
+

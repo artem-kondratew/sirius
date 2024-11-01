@@ -1,0 +1,22 @@
+[build-system]
+requires = [
+  "setuptools",
+  "setuptools-scm",
+  "wheel",
+  "tk",
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lab7"
+version = "0.0.1"
+authors = [
+    { name = "Artem Kondratev", email = "artemkondratev5@gmail.com" }
+]
+description = "Forward kinematics calculator"
+readme = "README.md"
+requires-python = ">=3.10"
+keywords = ["pi"]
+license = { text = "GSL" }
+dependencies = [
+]

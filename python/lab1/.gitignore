@@ -1,0 +1,7 @@
+tests/etalon
+tests/files
+.test_venv
+.git
+__pycache__
+lab1.egg-info
+build
