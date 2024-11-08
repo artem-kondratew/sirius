@@ -29,7 +29,7 @@ public:
     void resize(size_t size, double value=0.0) { v_.resize(size, value); }
 
 private:
-    static std::vector<Poly> divide(const Poly& dividend, const Poly& divisor);
+    static std::pair<Poly, Poly> divide(const Poly& dividend, const Poly& divisor);
 
 public:
     Poly operator*(const double& k) const;
@@ -125,22 +125,22 @@ Poly& Poly::operator*=(const Poly& other) {
 
 
 Poly& Poly::operator/=(const Poly& other) {
-    *this = divide(*this, other)[0];
+    *this = divide(*this, other).first;
     return *this;
 }
 
 
 Poly& Poly::operator%=(const Poly& other) {
-    *this = divide(*this, other)[1];
+    *this = divide(*this, other).second;
     return *this;
 }
 
 
-std::vector<Poly> Poly::divide(const Poly& poly, const Poly& divisor) {
+std::pair<Poly, Poly> Poly::divide(const Poly& poly, const Poly& divisor) {
     Poly dividend = poly;
 
     if (dividend.deg() < divisor.deg()) {
-        return std::vector<Poly>{Poly{std::vector<double>{0}}, dividend};
+        return std::pair<Poly, Poly>{Poly{std::vector<double>{0}}, dividend};
     }
 
     Poly quotient;
@@ -153,7 +153,7 @@ std::vector<Poly> Poly::divide(const Poly& poly, const Poly& divisor) {
         dividend -= shifted;
     }
 
-    return std::vector<Poly>{quotient, dividend};
+    return std::pair<Poly, Poly>{quotient, dividend};
 }
 
 
