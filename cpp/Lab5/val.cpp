@@ -19,15 +19,15 @@
 
 
 template <size_t N>
-int64_t rec = A_VALUE * rec<N - 1> + B_VALUE * rec<N - 2>;
+constexpr int64_t rec = A_VALUE * rec<N - 1> + B_VALUE * rec<N - 2>;
 
 
 template <>
-int64_t rec<1> = Y1_VALUE;
+constexpr int64_t rec<1> = Y1_VALUE;
 
 
 template <>
-int64_t rec<2> = Y2_VALUE;
+constexpr int64_t rec<2> = Y2_VALUE;
 
 
 int main() {
