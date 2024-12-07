@@ -1,0 +1,4 @@
+yolo:
+    ros__parameters:
+        input_topic: /camera/camera/color/image_raw                    # topic with rgb, depth and odom     
+        output_topic: /yolo/image_raw                   # topic with rgb, depth and odom   
