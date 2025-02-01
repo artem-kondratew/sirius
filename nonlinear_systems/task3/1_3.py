@@ -10,7 +10,10 @@ dt = 0.0001 #Шаг по времени
 solution = [] #Массивы для хранения значений
 tarr = []
 uarr = []
-derx = []
+sigmaarr = []
+varr = []
+dsigmaarr = []
+sarr = []
 
 
 def sign_exp(x, p):
@@ -47,6 +50,10 @@ def rhs(t, state): # Функция возвращает правые части
     u += v * dt
     
     uarr.append(u)
+    varr.append(v)
+    sarr.append(s)
+    dsigmaarr.append(dsigma)
+    sigmaarr.append(sigma)
 
     dx1 = x2
     dx2 = (u - k * x2 * np.abs(x2)) / m
@@ -64,46 +71,44 @@ while t < t1:
     x[0] = x[0] + dx[0] * dt
     x[1] = x[1] + dx[1] * dt
 
-    derx.append(dx)
     solution.append(x[:2])
     tarr.append(t)
     t += dt
 
 
 y1, y2 = zip(*solution)
-dy1, dy2 = zip(*derx)
 
-fig, (ax1, ax2, ax3) = plt.subplots(3, 1, figsize=(7,5), sharex=True) # Вывод графиков (добавить вывод u)
+import matplotlib.pyplot as plt
+
+import matplotlib.pyplot as plt
+
+fig, (ax1, ax2, ax3) = plt.subplots(3, 1, figsize=(7, 5), sharex=True)
+
+# Первый график: x1, x2
 ax1.set_xlabel('Time, s')
-ax1.set_ylabel('X1')
-ax1.plot(tarr, y1, 'k-')
+ax1.set_ylabel('$x_1$, $x_2$')
+ax1.plot(tarr, y2, 'b-', label='$x_2$')
+ax1.plot(tarr, y1, 'r-', label='$x_1$')
+ax1.legend(loc='upper right', bbox_to_anchor=(1, 1))
 ax1.grid(True)
 
+# Второй график: s, sigma, sigma_dot
 ax2.set_xlabel('Time, s')
-ax2.set_ylabel('X2')
-ax2.plot(tarr, y2, 'k-')
+ax2.set_ylabel('$s$, $\\sigma$, $\\dot{\\sigma}$')
+ax2.plot(tarr, sigmaarr, 'b-', label='$\\sigma$')
+ax2.plot(tarr, dsigmaarr, 'r-', label='$\\dot{\\sigma}$')
+ax2.plot(tarr, sarr, 'g-', label='$s$')
+ax2.legend(loc='upper right', bbox_to_anchor=(1, 1))
 ax2.grid(True)
 
+# Третий график: v, u
 ax3.set_xlabel('Time, s')
-ax3.set_ylabel('X1, X2')
-ax3.plot(tarr, y2, 'b-')
-ax3.plot(tarr, y1, 'r-')
+ax3.set_ylabel('$v$, $u$')
+ax3.plot(tarr, varr, 'b-', label='$v$')
+ax3.plot(tarr, uarr, 'r-', label='$u$')
+ax3.legend(loc='upper right', bbox_to_anchor=(1, 1))
 ax3.grid(True)
 
-fi2, (ax21, ax22, ax23) = plt.subplots(3, 1, figsize=(7,5), sharex=True)
-ax21.set_xlabel('Time, s')
-ax21.set_ylabel('dX1')
-ax21.plot(tarr, dy1, 'k-')
-ax21.grid(True)
-
-ax22.set_xlabel('Time, s')
-ax22.set_ylabel('dX2')
-ax22.plot(tarr, dy2, 'k-')
-ax22.grid(True)
-
-ax23.set_xlabel('Time, s')
-ax23.set_ylabel('u')
-ax23.plot(tarr, uarr, 'k-')
-ax23.grid(True)
-
+plt.tight_layout()  # Улучшает расположение графиков
 plt.show()
+

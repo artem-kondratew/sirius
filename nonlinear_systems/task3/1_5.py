@@ -10,7 +10,9 @@ dt = 0.0001 #Шаг по времени
 solution = [] #Массивы для хранения значений
 tarr = []
 uarr = []
-derx = []
+sigmaarr = []
+sarr = []
+varr = []
 
 
 def sign_exp(x, p):
@@ -46,6 +48,9 @@ def rhs(t, state):
     u += v * dt
     
     uarr.append(u)
+    sarr.append(s)
+    varr.append(v)
+    sigmaarr.append(sigma)
 
     dx1 = x2
     dx2 = (u - k * x2 * np.abs(x2)) / m
@@ -63,46 +68,40 @@ while t < t1:
     x[0] = x[0] + dx[0] * dt
     x[1] = x[1] + dx[1] * dt
 
-    derx.append(dx)
     solution.append(x[:2])
     tarr.append(t)
     t += dt
 
 
 y1, y2 = zip(*solution)
-dy1, dy2 = zip(*derx)
 
-fig, (ax1, ax2, ax3) = plt.subplots(3, 1, figsize=(7,5), sharex=True) # Вывод графиков (добавить вывод u)
+import matplotlib.pyplot as plt
+
+fig, (ax1, ax2, ax3) = plt.subplots(3, 1, figsize=(7, 5), sharex=True)
+
+# Первый график: X1, X2
 ax1.set_xlabel('Time, s')
-ax1.set_ylabel('X1')
-ax1.plot(tarr, y1, 'k-')
+ax1.set_ylabel('$X_1$, $X_2$')
+ax1.plot(tarr, y2, 'b-', label='$X_2$')
+ax1.plot(tarr, y1, 'r-', label='$X_1$')
+ax1.legend(loc='upper right')
 ax1.grid(True)
 
+# Второй график: sigma, s
 ax2.set_xlabel('Time, s')
-ax2.set_ylabel('X2')
-ax2.plot(tarr, y2, 'k-')
+ax2.set_ylabel('$\\sigma$, $s$')
+ax2.plot(tarr, sigmaarr, 'b-', label='$\\sigma$')
+ax2.plot(tarr, sarr, 'r-', label='$s$')
+ax2.legend(loc='upper right')
 ax2.grid(True)
 
+# Третий график: u
 ax3.set_xlabel('Time, s')
-ax3.set_ylabel('X1, X2')
-ax3.plot(tarr, y2, 'b-')
-ax3.plot(tarr, y1, 'r-')
+ax3.set_ylabel('$u$')
+ax3.plot(tarr, varr, 'b-', label='$v$')
+ax3.plot(tarr, uarr, 'r-', label='$u$')
+ax3.legend(loc='upper right')
 ax3.grid(True)
 
-fi2, (ax21, ax22, ax23) = plt.subplots(3, 1, figsize=(7,5), sharex=True)
-ax21.set_xlabel('Time, s')
-ax21.set_ylabel('dX1')
-ax21.plot(tarr, dy1, 'k-')
-ax21.grid(True)
-
-ax22.set_xlabel('Time, s')
-ax22.set_ylabel('dX2')
-ax22.plot(tarr, dy2, 'k-')
-ax22.grid(True)
-
-ax23.set_xlabel('Time, s')
-ax23.set_ylabel('u')
-ax23.plot(tarr, uarr, 'k-')
-ax23.grid(True)
-
+plt.tight_layout()  # Улучшает компоновку графиков
 plt.show()

@@ -23,8 +23,6 @@ def rhs(t, state): # Функция возвращает правые части
 
     sigma = x2 + x1
 
-    print(sigma)
-
     e = 0.1 
     km = 1.9 
     ro = km * x2 * x2 + 1
