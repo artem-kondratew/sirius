@@ -114,6 +114,8 @@ ax1.plot(x, y, color='blue', label='poly')  # вывод значений пол
 # вывод точек, участвующих в ограничениях
 ax1.scatter([0, 3, 7, 10], [poly(coeffs, 0), poly(coeffs, 3), poly(coeffs, 7), poly(coeffs, 10)], color='red')
 
+print(poly(coeffs, 0), poly(coeffs, 3), poly(coeffs, 7), poly(coeffs, 10))
+
 print('Task 1: ok')
 
 # Задача 2. Генерация шума
@@ -281,7 +283,7 @@ print('Task 4: ok')
 # Задача 5. Поиск коэффициентов полинома с новым шумом
 # Полное повторение задачи 3, но с модифицированным вектором z
 
-calc_mse = True  # если True, расчет коэффициентов каждым методом производится 10 раз, иначе - 1 раз
+calc_mse = False  # если True, расчет коэффициентов каждым методом производится 10 раз, иначе - 1 раз
 N = 1 if not calc_mse else 10
 
 lsm = np.linalg.inv(A.T @ A) @ A.T @ z  # Поиск коэффициентов с помощью аналитического решения МНК
